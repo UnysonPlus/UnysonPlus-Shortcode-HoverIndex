@@ -1,0 +1,101 @@
+/* Hover Index — installable UnysonPlus shortcode. */
+
+.fw-hvx {
+  --hvx-accent: #2c50dd;
+  --hvx-text: inherit;
+  --hvx-meta: rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+.fw-hvx__list { width: 100%; }
+.fw-hvx--dividers .fw-hvx__list { border-top: 1px solid rgba(0, 0, 0, 0.12); }
+
+.fw-hvx__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3rem 1fr auto auto;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: clamp(1rem, 2.4vh, 1.8rem) 0;
+  color: var(--hvx-text);
+  text-decoration: none;
+}
+.fw-hvx--dividers .fw-hvx__row { border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+
+.fw-hvx__n {
+  font-family: var(--upw-mono, ui-monospace, monospace);
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+.fw-hvx__t {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  transition: color 0.3s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fw-hvx--size-md .fw-hvx__t { font-size: clamp(1.2rem, 3vw, 1.8rem); }
+.fw-hvx--size-lg .fw-hvx__t { font-size: clamp(1.5rem, 4vw, 2.6rem); }
+.fw-hvx--size-xl .fw-hvx__t { font-size: clamp(1.8rem, 5vw, 3.4rem); }
+
+.fw-hvx__meta,
+.fw-hvx__yr {
+  font-family: var(--upw-mono, ui-monospace, monospace);
+  font-size: 0.78rem;
+  color: var(--hvx-meta);
+  align-self: center;
+}
+.fw-hvx__meta:empty,
+.fw-hvx__yr:empty { display: none; }
+
+.fw-hvx__row:hover .fw-hvx__t { color: var(--hvx-accent); }
+@media (hover: hover) and (pointer: fine) {
+  .fw-hvx__row:hover .fw-hvx__t { transform: translateX(0.6rem); }
+}
+
+/* inline thumbnail — only for touch / no-hover (the floating peek replaces it) */
+.fw-hvx__thumb {
+  display: none;
+  grid-column: 2 / -1;
+  margin-top: 0.8rem;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* the preview that follows the cursor */
+.fw-hvx__peek {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 60;
+  width: clamp(220px, 22vw, 340px);
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  clip-path: inset(0 0 100% 0);
+  transform: translate(var(--hvx-x, 0px), var(--hvx-y, 0px)) translate(28px, -50%);
+  will-change: transform, opacity, clip-path;
+  box-shadow: 0 30px 60px -22px rgba(18, 22, 42, 0.4);
+}
+.fw-hvx--ratio-portrait .fw-hvx__peek { aspect-ratio: 4 / 5; }
+.fw-hvx--ratio-landscape .fw-hvx__peek { aspect-ratio: 3 / 2; }
+.fw-hvx--ratio-square .fw-hvx__peek { aspect-ratio: 1 / 1; }
+.fw-hvx__peek img { width: 100%; height: 100%; object-fit: cover; }
+
+.fw-hvx__empty { padding: 1rem; color: #888; font-style: italic; }
+
+/* touch / no-hover: hide the floating peek, show inline thumbnails */
+@media (hover: none), (pointer: coarse) {
+  .fw-hvx__peek { display: none; }
+  .fw-hvx__thumb { display: block; }
+  .fw-hvx__row { grid-template-columns: 2.4rem 1fr; }
+  .fw-hvx__meta, .fw-hvx__yr { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-hvx__peek { display: none; }
+  .fw-hvx__thumb { display: block; }
+  .fw-hvx__t { transition: none; }
+}
