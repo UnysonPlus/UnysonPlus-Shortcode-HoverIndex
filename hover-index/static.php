@@ -26,7 +26,7 @@ if ( ! function_exists( 'fw_sc_hvx_dir_to_uri' ) ) {
 }
 
 $uri = fw_sc_hvx_dir_to_uri( dirname( __FILE__ ) );
-$ver = '1.0.1';
+$ver = '1.0.2';
 
 wp_enqueue_style( 'fw-sc-hover-index', $uri . '/static/css/styles.css', array(), $ver );
 wp_enqueue_script( 'fw-sc-hover-index', $uri . '/static/js/scripts.js', array(), $ver, true );
